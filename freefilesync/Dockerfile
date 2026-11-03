@@ -47,6 +47,10 @@ ENV DISPLAY=:0
 
 EXPOSE 8080
 
+# Healthy once easy-novnc accepts TCP connections on 8080 (bash /dev/tcp, no extra packages).
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
+    CMD bash -c 'exec 3<>/dev/tcp/127.0.0.1/8080' || exit 1
+
 VOLUME /home/freefilesync/path1/
 VOLUME /home/freefilesync/path2/
 VOLUME /home/freefilesync/.config/FreeFileSync/
