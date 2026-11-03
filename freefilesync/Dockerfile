@@ -4,7 +4,7 @@ RUN go mod init build && \
     go get github.com/geek1011/easy-novnc@v1.1.0 && \
     go build -o /bin/easy-novnc github.com/geek1011/easy-novnc
 
-FROM ubuntu:22.04 as freefilesync-prep
+FROM ubuntu:22.04 AS freefilesync-prep
 
 RUN apt update -y && apt install -y --no-install-recommends wget ca-certificates 7zip
 RUN mkdir /opt/ffs_dl \
