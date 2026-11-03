@@ -4,7 +4,7 @@ RUN go mod init build && \
     go get github.com/geek1011/easy-novnc@v1.1.0 && \
     go build -o /bin/easy-novnc github.com/geek1011/easy-novnc
 
-FROM ubuntu:22.04 as freefilesync-prep
+FROM ubuntu:22.04 AS freefilesync-prep
 
 RUN apt update -y && apt install -y --no-install-recommends wget ca-certificates 7zip
 RUN mkdir /opt/ffs_dl \
@@ -47,23 +47,12 @@ ENV DISPLAY=:0
 
 EXPOSE 8080
 
+# Healthy once easy-novnc accepts TCP connections on 8080 (bash /dev/tcp, no extra packages).
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
+    CMD bash -c 'exec 3<>/dev/tcp/127.0.0.1/8080' || exit 1
+
 VOLUME /home/freefilesync/path1/
 VOLUME /home/freefilesync/path2/
 VOLUME /home/freefilesync/.config/FreeFileSync/
 
 CMD ["bash", "-c", "chown -R 99:100 /dev/stdout && exec gosu freefilesync supervisord"]
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
