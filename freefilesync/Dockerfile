@@ -52,18 +52,3 @@ VOLUME /home/freefilesync/path2/
 VOLUME /home/freefilesync/.config/FreeFileSync/
 
 CMD ["bash", "-c", "chown -R 99:100 /dev/stdout && exec gosu freefilesync supervisord"]
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    

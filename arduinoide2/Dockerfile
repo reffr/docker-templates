@@ -19,8 +19,8 @@ RUN apt-get update -y && \
     && wget -qO arduino-ide.AppImage https://downloads.arduino.cc/arduino-ide/arduino-ide_2.3.2_Linux_64bit.AppImage \
     && chmod +x arduino-ide.AppImage \
     && useradd -u 99 -g 100 -s /bin/bash --create-home --home-dir /home/arduino arduino \
-    && chown -R 99:100 /home/arduino \ 
-    && pip3 install pyserial   
+    && chown -R 99:100 /home/arduino \
+    && pip3 install pyserial
 
 COPY --from=easy-novnc-build /bin/easy-novnc /usr/local/bin/
 COPY supervisord.conf /etc/
@@ -33,18 +33,3 @@ EXPOSE 8080
 VOLUME /home/arduino/
 
 CMD ["bash", "-c", "groupmod -o -g ${PGID} users && usermod -o -u ${PUID} arduino && chown -R ${PUID}:${PGID} /dev/stdout /home/arduino && chmod 0666 /dev/tty* && exec gosu arduino supervisord"]
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
